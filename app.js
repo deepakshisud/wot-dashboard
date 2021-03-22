@@ -52,15 +52,24 @@ app.use((req, res, next) => {
  })
 
 
+app.get('/dashboard', (req, res) => {
+    if(!req.isAuthenticated()) {
+        res.redirect('/login');
+    } else {
+        res.render('dashboard');
+    }
+
+})
+
 app.get('/login', (req, res) => {
     res.render('login');
 })
 
-app.post('/login', (req, res) => {
-    res.send(req.body);
+app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), (req, res) => {
+    res.redirect('dashboard');
 })
 
-app.get('/rgister', (req, res) => {
+app.get('/register', (req, res) => {
     res.render('register');
 })
 
