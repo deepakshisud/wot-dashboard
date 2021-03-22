@@ -52,6 +52,10 @@ app.use((req, res, next) => {
  })
 
 
+app.get('/home', (req, res) => {
+    res.render('home');
+}) 
+
 app.get('/dashboard', (req, res) => {
     if(!req.isAuthenticated()) {
         res.redirect('/login');
@@ -82,8 +86,10 @@ app.post('/register', async(req, res) => {
     } catch(e) {
         res.redirect('register');
     }
+})
 
-
+app.get('/logout', (req, res) => {
+    res.render('home');
 })
 
 app.listen(3000, () => {
