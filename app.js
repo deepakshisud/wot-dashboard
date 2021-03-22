@@ -53,7 +53,28 @@ app.use((req, res, next) => {
 
 
 app.get('/login', (req, res) => {
-    res.send("working");
+    res.render('login');
+})
+
+app.post('/login', (req, res) => {
+    res.send(req.body);
+})
+
+app.get('/rgister', (req, res) => {
+    res.render('register');
+})
+
+app.post('/register', async(req, res) => {
+    try {
+        const {email, username, password} = req.body;
+        const user = new User({email, username});
+        const registeredUser = await User.register(user, password);
+        res.redirect('dashboard');
+    } catch(e) {
+        res.redirect('register');
+    }
+
+
 })
 
 app.listen(3000, () => {
