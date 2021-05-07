@@ -4,10 +4,12 @@ const app = express();
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const fetch = require('node-fetch');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
 const User = require('./models/user');
+const Data = require('./models/data');
 
 mongoose.connect('mongodb://localhost:27017/wot-dashboard', {
     useNewUrlParser: true,
@@ -56,10 +58,19 @@ app.get('/home', (req, res) => {
     res.render('home');
 }) 
 
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', async(req, res) => {
     if(!req.isAuthenticated()) {
         res.redirect('/login');
     } else {
+        await fetch('https://api.thingspeak.com/channels/1381505/feeds.json?api_key=0WZ9O9SQ1147GTEQ&results=1')
+        .then(res => res.json())
+        .then(json => {
+            const pt = parseFloat(json.feeds[0].field1) || 0;
+            const dist = parseFloat(json.feeds[0].field2) || 0;
+            const data = new Data({persontemp, distance});
+            data.save();
+            console.log(data);
+        })
         res.render('dashboard');
     }
 
