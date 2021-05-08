@@ -58,22 +58,34 @@ app.get('/home', (req, res) => {
     res.render('home');
 }) 
 
+app.post('/getdata', async(req, res)=> {
+    await fetch('https://api.thingspeak.com/channels/1381505/feeds.json?api_key=0WZ9O9SQ1147GTEQ&results=50')
+            .then(res => res.json())
+            .then(json => {
+                for(let feed of json.feeds) {
+                    const pt = parseFloat(feed.field1) || 0;
+                    const dist = parseFloat(feed.field2) || 0;
+                    const d = new Date(feed.created_at);
+                    const date = d.getTime();
+                    const data = new Data();
+                    data.persontemp.val = pt;
+                    data.persontemp.timestamp = date;
+                    data.distance.val = dist;
+                    data.distance.timestamp = date;
+                    console.log(data);
+                    data.save();
+                }
+            })
+    res.redirect('/dashboard');
+})
+
 app.get('/dashboard', async(req, res) => {
     if(!req.isAuthenticated()) {
         res.redirect('/login');
     } else {
-        await fetch('https://api.thingspeak.com/channels/1381505/feeds.json?api_key=0WZ9O9SQ1147GTEQ&results=1')
-        .then(res => res.json())
-        .then(json => {
-            const pt = parseFloat(json.feeds[0].field1) || 0;
-            const dist = parseFloat(json.feeds[0].field2) || 0;
-            const data = new Data({persontemp, distance});
-            data.save();
-            console.log(data);
-        })
-        res.render('dashboard');
+        const data = await Data.find();
+        res.render('dashboard', {data});
     }
-
 })
 
 app.get('/login', (req, res) => {

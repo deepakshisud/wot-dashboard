@@ -1,2 +1,45 @@
 <% layout('boilerplate') %> 
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 <h1>Dashboard comes here</h1>
+<form action="/getdata" method="POST">
+    <button>Get data</button>
+</form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div id = "Graph1" class=""></div>
+        </div>
+        <div class="col-lg-6">
+            <div id = "Graph2" class=""></div>
+        </div>
+    </div>
+</div>
+<script>
+    var test = '<%- JSON.stringify(data) %>'
+    var d = JSON.parse(test)
+    let x = [];
+    let y = []
+    let z = []
+    for(let data of d) {
+        if(data.persontemp){
+            x.push(data.persontemp.timestamp);
+            y.push(data.persontemp.val);
+            z.push(data.distance.val);
+        }
+    }
+    var trace1 = {
+        x: x,
+        y: y,
+        type: 'scatter'
+    };
+    var trace2 = {
+        x: x,
+        y: z,
+        type: 'scatter'
+    };
+
+    var data1 = [trace1];
+    var data2 = [trace2];
+    Plotly.newPlot('Graph1', data1);
+    Plotly.newPlot('Graph2', data2);
+</script>
