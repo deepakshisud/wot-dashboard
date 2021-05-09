@@ -13,33 +13,85 @@
             <div id = "Graph2" class=""></div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div id = "Graph3" class=""></div>
+        </div>
+        <div class="col-lg-6">
+            <div id = "Graph4" class=""></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div id = "Graph5" class=""></div>
+        </div>
+        <div class="col-lg-6">
+            <div id = "Graph6" class=""></div>
+        </div>
+    </div>
 </div>
 <script>
     var test = '<%- JSON.stringify(data) %>'
     var d = JSON.parse(test)
-    let x = [];
-    let y = []
-    let z = []
+    let pt = [];
+    let dist = [];
+    let gar = [];
+    let ele = [];
+    let co = [];
+    let te = [];
+    let timestamp = [];
     for(let data of d) {
-        if(data.persontemp){
-            x.push(data.persontemp.timestamp);
-            y.push(data.persontemp.val);
-            z.push(data.distance.val);
+        if(data.persontemp && data.distance && data.elevator && data.garbagelevel && data.colevel && data.temp){
+            timestamp.push(data.persontemp.timestamp);
+            pt.push(data.persontemp.val);
+            dist.push(data.distance.val);
+            gar.push(data.garbagelevel.val);
+            ele.push(data.elevator.val);
+            co.push(data.colevel.val);
+            te.push(data.temp.val);
         }
     }
     var trace1 = {
-        x: x,
-        y: y,
+        x: timestamp,
+        y: pt,
         type: 'scatter'
     };
     var trace2 = {
-        x: x,
-        y: z,
+        x: timestamp,
+        y: dist,
+        type: 'scatter'
+    };
+    var trace3 = {
+        x: timestamp,
+        y: gar,
+        type: 'scatter'
+    };
+    var trace4 = {
+        x: timestamp,
+        y: ele,
+        type: 'scatter'
+    };
+    var trace5 = {
+        x: timestamp,
+        y: co,
+        type: 'scatter'
+    };
+    var trace6 = {
+        x: timestamp,
+        y: te,
         type: 'scatter'
     };
 
     var data1 = [trace1];
     var data2 = [trace2];
+    var data3 = [trace3];
+    var data4 = [trace4];
+    var data5 = [trace5];
+    var data6 = [trace6];
     Plotly.newPlot('Graph1', data1);
     Plotly.newPlot('Graph2', data2);
+    Plotly.newPlot('Graph3', data3);
+    Plotly.newPlot('Graph4', data4);
+    Plotly.newPlot('Graph5', data5);
+    Plotly.newPlot('Graph6', data6);
 </script>

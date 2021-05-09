@@ -65,6 +65,10 @@ app.post('/getdata', async(req, res)=> {
                 for(let feed of json.feeds) {
                     const pt = parseFloat(feed.field1) || 0;
                     const dist = parseFloat(feed.field2) || 0;
+                    const gar = parseFloat(feed.field3) || 0;
+                    const ele = parseFloat(feed.field4) || 0;
+                    const co = parseFloat(feed.field5) || 0;
+                    const te = parseFloat(feed.field6) || 0;
                     const d = new Date(feed.created_at);
                     const date = d.getTime();
                     const data = new Data();
@@ -72,7 +76,14 @@ app.post('/getdata', async(req, res)=> {
                     data.persontemp.timestamp = date;
                     data.distance.val = dist;
                     data.distance.timestamp = date;
-                    console.log(data);
+                    data.garbagelevel.val = gar;
+                    data.garbagelevel.timestamp = date;
+                    data.elevator.val = ele;
+                    data.elevator.timestamp = date;
+                    data.colevel.val = co;
+                    data.colevel.timestamp = date;
+                    data.temp.val = te;
+                    data.temp.timestamp = date;
                     data.save();
                 }
             })
@@ -83,7 +94,7 @@ app.get('/dashboard', async(req, res) => {
     if(!req.isAuthenticated()) {
         res.redirect('/login');
     } else {
-        const data = await Data.find();
+        const data = await Data.find({});
         res.render('dashboard', {data});
     }
 })
