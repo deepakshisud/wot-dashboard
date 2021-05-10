@@ -1,26 +1,19 @@
 <% layout('boilerplate') %> 
-<h1>Register</h1>
-<form action="/register" class="validated-form" method="POST" novalidate>
-    <div class="mb-3">
-        <label class="form-lable" for="username">Username</label>
-        <input class = "form-control" type="text" name="username" id="username" required>
-        <div class="valid-feedback">
-            Looks good!
+<div class="container py-3" style="width: 30%; margin-top: 10%; background-color: gray; border-radius: 3%;">
+    <h2 class="display-4"><b>REGISTER</b></h2>
+    <form action="/register" class="validated-form" method="POST" novalidate>
+        <div class="mb-3">
+            <label class="form-lable" for="username">Username</label>
+            <input class = "form-control" type="text" name="username" id="username" required>
         </div>
-    </div>
-    <div class="mb-3">
-        <label class="form-lable" for="email">Email ID</label>
-        <input class = "form-control" type="email" name="email" id="email" required>
-        <div class="valid-feedback">
-            Looks good!
+        <div class="mb-3">
+            <label class="form-lable" for="email">Email ID</label>
+            <input class = "form-control" type="email" name="email" id="email" required>
         </div>
-    </div>
-    <div class="mb-3">
-        <label class="form-lable" for="password">Password</label>
-        <input class = "form-control" type="password" name="password" id="password" required>
-        <div class="valid-feedback">
-            Looks good!
+        <div class="mb-3">
+            <label class="form-lable" for="password">Password</label>
+            <input class = "form-control" type="password" name="password" id="password" required>
         </div>
-    </div>
-    <button class="btn btn-success">Register</button>
-</form>
+        <button class="btn btn-dark">Register</button>
+    </form>
+</div>

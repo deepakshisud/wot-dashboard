@@ -54,9 +54,13 @@ app.use((req, res, next) => {
  })
 
 
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
     res.render('home');
 }) 
+
+app.get('/about', (req, res) => {
+    res.render('about');
+})
 
 app.post('/getdata', async(req, res)=> {
     await fetch('https://api.thingspeak.com/channels/1381505/feeds.json?api_key=0WZ9O9SQ1147GTEQ&results=50')

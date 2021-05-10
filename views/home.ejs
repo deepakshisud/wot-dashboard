@@ -1,5 +1,19 @@
 <% layout('boilerplate') %> 
-<h1>Dashboard comes here</h1>
-<form action="/getdata" method="POST">
-    <button>Get data</button>
-</form>
+<style>
+    #main {
+        background-image: url(https://images.unsplash.com/photo-1507646227500-4d389b0012be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fGlvdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60);
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 90%;
+        background-size: cover;
+    }
+
+</style> 
+<div class="container text-center d-flex justify-content-center align-items-center flex-column" id="main">
+    <h1 style="color: white; font-weight: 600;" class="display-3">Control IT</h1>
+    <h6 style="color: white;">A one-stop solution for all your home IoT devices to be viewed on the internet!</h4>
+    <br>
+    <form action="/getdata" method="POST">
+        <button class="btn btn-light">Get data</button>
+    </form>
+</div>
