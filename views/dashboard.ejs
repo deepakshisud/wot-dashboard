@@ -1,31 +1,28 @@
 <% layout('boilerplate') %> 
 <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-<h1>Dashboard comes here</h1>
-<form action="/getdata" method="POST">
-    <button>Get data</button>
-</form>
-<div class="container">
+<div class="container text-center">
+    <form action="/getdata" method="POST">
+        <button class="btn btn-secondary">Get data</button>
+    </form>
+</div>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div id = "Graph1" class=""></div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div id = "Graph2" class=""></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div id = "Graph3" class=""></div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div id = "Graph4" class=""></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div id = "Graph5" class=""></div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div id = "Graph6" class=""></div>
         </div>
     </div>
@@ -51,25 +48,19 @@
             te.push(data.temp.val);
         }
     }
-    var trace1 = {
-        x: timestamp,
-        y: pt,
-        type: 'scatter'
-    };
-    var trace2 = {
-        x: timestamp,
-        y: dist,
-        type: 'scatter'
-    };
     var trace3 = {
         x: timestamp,
         y: gar,
-        type: 'scatter'
+        type: 'scatter',
+        mode: 'markers',
+        marker: { size: 12 }
     };
     var trace4 = {
         x: timestamp,
         y: ele,
-        type: 'scatter'
+        type: 'scatter',
+        mode: 'markers',
+        marker: { size: 12 }
     };
     var trace5 = {
         x: timestamp,
@@ -81,17 +72,114 @@
         y: te,
         type: 'scatter'
     };
+    var t=0;
+    var interval = setInterval(function() {
+        var data1 = [
+        {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: pt[t],
+        title: { text: "Person Temperature" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: 36 },
+        gauge: {
+        axis: { range: [-31, 100] },
+        steps: [
+            { range: [0, 30], color: "lightgray" },
+            { range: [30, 40], color: "gray" }
+        ],
+        threshold: {
+            line: { color: "red", width: 4 },
+            thickness: 0.75,
+            value: 99
+        }
+        }
+        }
+        ];
+    var layout1 = { width: 500, height: 450, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('Graph1', data1, layout1);
+    var data5 = [
+        {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: co[t],
+        title: { text: "CO Level" },
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: 150 },
+        gauge: {
+        axis: { range: [0, 500] },
+        steps: [
+            { range: [0, 300], color: "lightgray" },
+            { range: [100, 150], color: "gray" }
+        ],
+        threshold: {
+            line: { color: "red", width: 4 },
+            thickness: 0.75,
+            value: 149
+        }
+        }
+        }
+        ];
+    var layout5 = { width: 500, height: 450, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('Graph5', data5, layout5);
+    var data6 = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: te[t],
+            title: { text: "Temperature" },
+            type: "indicator",
+            mode: "gauge+number+delta",
+            delta: { reference: 36 },
+            gauge: {
+            axis: { range: [-31, 100] },
+            steps: [
+                { range: [0, 30], color: "lightgray" },
+                { range: [30, 40], color: "gray" }
+            ],
+            threshold: {
+                line: { color: "red", width: 4 },
+                thickness: 0.75,
+                value: 99
+            }
+            }
+        }
+    ];
+    var layout6 = { width: 500, height: 450, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('Graph6', data6, layout6);
+    t=t+1;
+    }, 1000);
+    var data2 = [
+    {
+        x: timestamp,
+        y: dist,
+        type: 'scatter'
+    }
+    ];
+    var layout2 = {
+        title: 'Distance between people'
+    } 
+    Plotly.newPlot('Graph2', data2, layout2);
+    var layout4 = {
+    xaxis: {
+        range: [1620000000000, 1620800000000]
+    },
+    yaxis: {
+        range: [0, 12]
+    },
+    title:'No. of people in elevator'
+    };
+    var layout3 = {
+    xaxis: {
+        range: [1620000000000, 1620800000000]
+    },
+    yaxis: {
+        range: [0, 200]
+    },
+    title:'Garbage level'
+    };
 
-    var data1 = [trace1];
-    var data2 = [trace2];
     var data3 = [trace3];
     var data4 = [trace4];
-    var data5 = [trace5];
-    var data6 = [trace6];
-    Plotly.newPlot('Graph1', data1);
-    Plotly.newPlot('Graph2', data2);
-    Plotly.newPlot('Graph3', data3);
-    Plotly.newPlot('Graph4', data4);
-    Plotly.newPlot('Graph5', data5);
-    Plotly.newPlot('Graph6', data6);
+    Plotly.newPlot('Graph3', data3, layout3);
+    Plotly.newPlot('Graph4', data4, layout4);
 </script>
