@@ -99,6 +99,7 @@ app.get('/dashboard', async(req, res) => {
         res.redirect('/login');
     } else {
         const data = await Data.find({});
+        console.log(data);
         res.render('dashboard', {data});
     }
 })
@@ -127,6 +128,7 @@ app.post('/register', async(req, res) => {
 })
 
 app.get('/logout', (req, res) => {
+    req.logOut();
     res.render('home');
 })
 
