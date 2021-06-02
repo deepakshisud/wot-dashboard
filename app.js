@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -11,7 +15,9 @@ const methodOverride = require('method-override');
 const User = require('./models/user');
 const Data = require('./models/data');
 
-mongoose.connect('mongodb://localhost:27017/wot-dashboard', {
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/wot-dashboard';
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
