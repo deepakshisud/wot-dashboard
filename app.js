@@ -138,8 +138,7 @@ app.get('/logout', (req, res) => {
     res.render('home');
 })
 
-const port = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(3000, () => {
     console.log("connected on port 3000");
 })
