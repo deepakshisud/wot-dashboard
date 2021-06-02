@@ -36,8 +36,10 @@ app.engine('ejs',ejsMate);
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
+const secret = process.env.SECRET || 'asecret';
+
 const sessionConfig = {
-    secret: 'asecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
