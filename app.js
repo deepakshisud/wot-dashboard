@@ -135,7 +135,7 @@ app.post('/register', async(req, res) => {
 
 app.get('/logout', (req, res) => {
     req.logOut();
-    res.redirect('/');
+    res.render('home');
 })
 
 const port = process.env.PORT || 3000;
