@@ -15,7 +15,8 @@ const methodOverride = require('method-override');
 const User = require('./models/user');
 const Data = require('./models/data');
 
-const dbUrl = process.env.DB_URL
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/wot-dashboard';
+console.log(dbUrl);
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
